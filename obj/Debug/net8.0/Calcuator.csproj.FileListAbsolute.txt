@@ -1,0 +1,15 @@
+C:\Users\Training Center 1\Repos\Calcuator\bin\Debug\net8.0\Calcuator.exe
+C:\Users\Training Center 1\Repos\Calcuator\bin\Debug\net8.0\Calcuator.deps.json
+C:\Users\Training Center 1\Repos\Calcuator\bin\Debug\net8.0\Calcuator.runtimeconfig.json
+C:\Users\Training Center 1\Repos\Calcuator\bin\Debug\net8.0\Calcuator.dll
+C:\Users\Training Center 1\Repos\Calcuator\bin\Debug\net8.0\Calcuator.pdb
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.AssemblyInfoInputs.cache
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.AssemblyInfo.cs
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.csproj.CoreCompileInputs.cache
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.sourcelink.json
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.dll
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\refint\Calcuator.dll
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.pdb
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\Calcuator.genruntimeconfig.cache
+C:\Users\Training Center 1\Repos\Calcuator\obj\Debug\net8.0\ref\Calcuator.dll
