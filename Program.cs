@@ -1,47 +1,68 @@
-﻿using System;
+﻿﻿using CalculatorDomainDemo;
 
-//Get inputs from user
-Console.WriteLine("Enter the first number: ");
-int input1 = int.Parse(Console.ReadLine());
+/// <summary>
+/// Program.cs is the ENTRY POINT.
+/// 
+/// Its job is to:
+/// - Collect input
+/// - Call domain logic
+/// - Show output
+/// 
+/// It should NOT:
+/// - Contain business rules
+/// - Make complex decisions
+/// 
+/// In the booking system:
+/// - This is like a controller or API endpoint
+/// </summary>
+Console.WriteLine("=== Calculator Demo ===");
 
-Console.WriteLine("Enter the second number: ");
-int input2 = int.Parse(Console.ReadLine());
+// Create the domain object
+// This is similar to creating a service in a backend system
+var calculator = new Calculator("Standard Calculator");
 
-Console.WriteLine("Enter an operation (+ , - , * , /) :");
+// Collect user input (UI concern)
+Console.Write("Enter first number: ");
+int a = int.Parse(Console.ReadLine()!);
 
-string operation = Console.ReadLine();
+Console.Write("Enter second number: ");
+int b = int.Parse(Console.ReadLine()!);
 
-//Make an instance the calculator class
-Calculator calculator = new Calculator();
+// UI presents choices
+Console.WriteLine("Choose operation:");
+Console.WriteLine("1 - Add");
+Console.WriteLine("2 - Subtract");
+Console.WriteLine("3 - Multiply");
+Console.WriteLine("4 - Divide");
 
-Calculator.OperationType operationType = Calculator.OperationType.Add;
+Console.Write("Selection: ");
+int selection = int.Parse(Console.ReadLine()!);
 
-if (operation == "-")
+// Translate UI input into a BUSINESS RULE
+// UI values should never leak into the domain
+OperationType operation = selection switch
 {
-   operationType = Calculator.OperationType.Sub;
-}
-else if (operation == "*")
-{
-    operationType = Calculator.OperationType.Multi;
+    1 => OperationType.Add,
+    2 => OperationType.Subtract,
+    3 => OperationType.Multiply,
+    4 => OperationType.Divide,
+    _ => throw new InvalidOperationException("Invalid selection")
+};
 
-}
-else if(operation == "/")
-{
-    operationType = Calculator.OperationType.Divide;
+// Create a request object (data only)
+// In booking: this would be a BookingRequest
+var request = new CalculationRequest(a, b, operation);
 
-}
-else
-{
-    if(operation != "+")
-    {
-        Console.WriteLine("Invalid Operation type");
-        System.Environment.Exit(0);
-    }
-   
-}
+// Apply behaviour
+// Program.cs does not calculate anything itself
+int result = calculator.Calculate(
+    request.A,
+    request.B,
+    request.Operation
+);
 
-CalculationRequest request = new CalculationRequest(input1, input2, operationType);
-
-double Result = calculator.calculate(request.a, request.b,request.operation);
-
-Console.WriteLine(Result);
+// Output result (UI concern)
+Console.WriteLine();
+Console.WriteLine($"Calculator: {calculator.Name}");
+Console.WriteLine($"Result: {result}");
+Console.WriteLine($"Last Result Stored: {calculator.LastResult}");

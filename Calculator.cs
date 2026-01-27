@@ -1,65 +1,79 @@
-//Calculator logic
+namespace CalculatorDomainDemo;
 
+/// <summary>
+/// This class represents the DOMAIN BEHAVIOUR.
+/// 
+/// In real systems:
+/// - This is where rules live
+/// - This is where decisions are made
+/// 
+/// In the booking system, this is similar to:
+/// - Booking management logic
+/// </summary>
 public class Calculator
 {
-    private  string sName;
-    public string Name {
-        
-        get {if (string.IsNullOrWhiteSpace(sName)) //If name field is empty or whitespace, then set deafault name
+    /// <summary>
+    /// This property stores state INSIDE the object.
+    /// 
+    /// Notice:
+    /// - Public getter
+    /// - Private setter
+    /// 
+    /// This means:
+    /// - Other code can read the value
+    /// - Only the Calculator can change it
+    /// 
+    /// This protects the object from invalid changes.
+    /// </summary>
+    public int LastResult { get; private set; }
+
+    /// <summary>
+    /// Every calculator must have a name.
+    /// 
+    /// Constructors define what MUST exist
+    /// for an object to be valid.
+    /// </summary>
+    public string Name { get; }
+
+    public Calculator(string name)
+    {
+        // Guard clause:
+        // We do NOT allow invalid objects to exist.
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Calculator must have a name");
+
+        Name = name;
+    }
+
+    /// <summary>
+    /// This method applies business rules.
+    /// 
+    /// It does NOT:
+    /// - Read from the console
+    /// - Print output
+    /// 
+    /// This separation is important because:
+    /// - Console apps are temporary
+    /// - Business logic must survive
+    /// 
+    /// In the booking system:
+    /// - This would decide if a booking is allowed
+    /// - This would enforce capacity rules
+    /// </summary>
+    public int Calculate(int a, int b, OperationType operation)
+    {
+        // Switch expression ensures ALL enum cases are handled
+        LastResult = operation switch
         {
-            Name = "Default Calculator";
-        }
-            else
-            {
-                Name = sName; //Assign var Name to private var sName and return sNme
-            }
-            return sName; } 
-        set
-        {
-            sName = value; //Set private var to value input
-        }}
-    public int Result {get; set;}
+            OperationType.Add => a + b,
+            OperationType.Subtract => a - b,
+            OperationType.Multiply => a * b,
+            OperationType.Divide => a / b,
 
-    public enum OperationType
-    {
-        Add,
-        Sub,
-        Multi,
-        Divide
-        
+            // This should never happen if enums are used correctly
+            _ => throw new InvalidOperationException("Invalid operation")
+        };
+
+        return LastResult;
     }
-
-    public Calculator (string s)
-    {
-        Name = s; //Overkill?
-        
-     
-    }
-
-    public Calculator ()
-    {
-        Name = "Default Calculator"; //Overkill if IsNullOrEmpty already implemented
-    }
-
-    public double calculate(int a, int b, OperationType operation)
-    {
-        switch(operation){
-            case OperationType.Add:
-                return a + b;
-                break;
-            
-            case OperationType.Sub:
-                return a - b;
-                break;
-            case OperationType.Multi:
-                return a * b;
-                break;
-            case OperationType.Divide:
-                return (double) a / b;
-
-            default:
-                throw new InvalidOperationException();
-        }
-    }
-
 }
