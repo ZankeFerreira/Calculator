@@ -1,5 +1,6 @@
 namespace CalculatorDomainDemo;
 
+
 /// <summary>
 /// This class represents the DOMAIN BEHAVIOUR.
 /// 
@@ -12,6 +13,11 @@ namespace CalculatorDomainDemo;
 /// </summary>
 public class Calculator
 {
+    //Fieds
+    private readonly List<CalculationRequest> _History = new();
+
+
+
     /// <summary>
     /// This property stores state INSIDE the object.
     /// 
@@ -25,7 +31,15 @@ public class Calculator
     /// 
     /// This protects the object from invalid changes.
     /// </summary>
+    /// 
+    /// Properties
+    
+    public IReadOnlyList<CalculationRequest> History
+    {
+        get {return _History;}              //View calc history
+    }
     public int LastResult { get; private set; }
+
 
     /// <summary>
     /// Every calculator must have a name.
@@ -45,6 +59,7 @@ public class Calculator
         Name = name;
     }
 
+    
     /// <summary>
     /// This method applies business rules.
     /// 
@@ -70,10 +85,63 @@ public class Calculator
             OperationType.Multiply => a * b,
             OperationType.Divide => a / b,
 
+
             // This should never happen if enums are used correctly
             _ => throw new InvalidOperationException("Invalid operation")
         };
 
+        CalculationRequest request = new CalculationRequest(a,b, operation);
+        _History.Add(request);
+
         return LastResult;
     }
+
+
+    //Get the addition operations were done on this calc
+
+    public List<CalculationRequest> ReturnAdditions ()
+    {
+        List<CalculationRequest> Additions = new List<CalculationRequest> ();
+        foreach (CalculationRequest req in _History)
+        {
+            if (req.Operation == OperationType.Add)
+            {
+                Additions.Add(req);
+            }
+        }
+        return Additions;
+
+    }
+
+    //Same, but use LINQ
+    public List <CalculationRequest> ReturnDivide()
+    {
+        
+        List<CalculationRequest> req = _History.Where(i  => i.Operation == OperationType.Divide).ToList();
+        
+        return req;
+    }
+
+    //Has Division ever been used?
+    public bool HasDivisionBeenUsed()
+    {
+        bool div = _History.Any(i  => i.Operation == OperationType.Divide);
+        
+        return div;
+    }
+
+    //Writing cutom exceptions
+    public double Divide(CalculationRequest request1)
+    {
+        if(request1.B == 0)
+        {
+            throw new InvalidOperationException("Division cannot be don because the denominatoris 0");
+        }
+        else
+        {
+            return request1.A/ request1.B;
+        }
+    }
+
+
 }
